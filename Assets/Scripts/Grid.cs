@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Grid
 {
-
-    
     int _width, _height;
     int _cellsize;
     int[,] _grid;
