@@ -8,7 +8,17 @@ public class WaveSpawner : MonoBehaviour
     float countdown = 2f;
     private void Update()
     {
-        
-    }
+        if (countdown <= 0f) 
+        {
+            SpawnWave();
+            countdown = timeBetweenWaves;
+        }
 
+        countdown -= Time.deltaTime;
+    }
+    void SpawnWave() 
+    {
+        Debug.Log("wave start");
+        Instantiate(enemyPrefab);
+    }
 }
