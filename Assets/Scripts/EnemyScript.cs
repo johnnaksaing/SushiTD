@@ -30,9 +30,19 @@ public class EnemyScript : MonoBehaviour
     }
     void GetNextWaypoint() 
     {
-        if (WavePointIndex >= Waypoints.WaypointTransforms.Length - 1)
-            Destroy(gameObject);
+        WavePointIndex = (WavePointIndex + 1)% Waypoints.WaypointTransforms.Length;
+        target = Waypoints.WaypointTransforms[WavePointIndex];
+        return;
+
+        if (WavePointIndex > Waypoints.WaypointTransforms.Length - 1)
+        {
+            WavePointIndex = 0;
+            //Destroy(gameObject);
+        }
         else
+        {
             target = Waypoints.WaypointTransforms[++WavePointIndex];
+
+        }
     }
 }
