@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class CustomerController : MonoBehaviour
 {
+    public enum E_CustomerState 
+    {
+        Idle,
+        Eating,
+        Default
+    }
+    public E_CustomerState m_State;
+
     public Transform target;
-    
 
     [Header("Attributes")]
 
@@ -13,6 +20,13 @@ public class CustomerController : MonoBehaviour
 
     public float fireRate = 1f;
     private float fireCountDown = 0f;
+
+    public float attackSpeed = 3f;
+
+    public float StomachAmount = 5f;
+
+    [SerializeField]
+    Store m_Store;
 
     [Header("Unity Setup Fields")]
 
@@ -24,10 +38,17 @@ public class CustomerController : MonoBehaviour
     public GameObject pfb_bullet;
     public Transform firePoint;
 
+    public Vector3 EatingOffset;
+
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("UpdateTarget",1f,0.5f);
+        if (m_Store == null)
+        {
+            m_Store = GameObject.Find("Envs").GetComponent<Store>();
+        }
+
+        InvokeRepeating("UpdateTarget",1f,0.2f);
     }
 
     private void OnDrawGizmosSelected()
@@ -41,30 +62,73 @@ public class CustomerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (target == null)   
+        if (m_State == E_CustomerState.Idle)
         {
-            return;
-        }
-        partToRotate.LookAt(target);
-        partToRotate.rotation = partToRotate.rotation * Quaternion.Euler(chestOffset);
+            
+            if (target == null)   
+            {
+                return;
+            }
 
-        /*
-        Vector3 dir = target.position - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(dir);
-        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation,lookRotation,Time.deltaTime * turnSpeed).eulerAngles;
-        partToRotate.rotation = Quaternion.Euler(rotation.y, 0f,0f);
-        */
-        if (fireCountDown <= 0f) 
-        {
-            Shoot();
-            fireCountDown = 1f / fireRate;
+            if (target != null && Vector3.Distance(target.position, transform.position) > range)
+                target = null;
+
+            partToRotate.LookAt(target);
+            partToRotate.rotation = partToRotate.rotation * Quaternion.Euler(chestOffset);
+
+            /*
+            Vector3 dir = target.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
+            Vector3 rotation = Quaternion.Lerp(partToRotate.rotation,lookRotation,Time.deltaTime * turnSpeed).eulerAngles;
+            partToRotate.rotation = Quaternion.Euler(rotation.y, 0f,0f);
+            */
+            if (fireCountDown <= 0f) 
+            {
+                GetSushi();
+                fireCountDown = 1f / fireRate;
+            }
+            fireCountDown -= Time.deltaTime;
         }
-        fireCountDown -= Time.deltaTime;
     }
 
-    void Shoot()
+    void GetSushi()
     {
+        m_State = E_CustomerState.Eating;
         Debug.Log("Pew");
+        EnemyScript Sushi = target.gameObject.GetComponent<EnemyScript>();
+
+        Sushi.m_State = EnemyScript.E_SushiState.Taken;
+        Sushi.speed *= 3;
+        target.position = transform.position + EatingOffset;
+
+        Eat();
+
+    }
+    void Eat() 
+    {
+        StartCoroutine("C_Eat");
+    }
+
+    IEnumerator C_Eat() 
+    {
+        yield return new WaitForSeconds(attackSpeed);
+
+        StomachAmount = StomachAmount - target.gameObject.GetComponent<EnemyScript>().HP;
+        
+        Destroy(target.gameObject);
+        m_State = E_CustomerState.Idle;
+
+        if (StomachAmount < 0)
+        {
+            m_Store.AddStar(CountStar());
+
+            Destroy(gameObject);
+        }
+    }
+
+    float CountStar() 
+    {
+        return 4f;
     }
 
     void UpdateTarget() 
@@ -94,11 +158,4 @@ public class CustomerController : MonoBehaviour
             target = null;
         }
     }
-
-
-
-
-    void IdleState() { }
-    void EatingState() { }
-    void AttackState() { }
 }

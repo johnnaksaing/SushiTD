@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public int HP;
+    public enum E_SushiState 
+    {
+        Taken,
+        Running,
+        Default
+    }
+
+    public float HP;
     
     public float speed = 10f;
+    public E_SushiState m_State = E_SushiState.Default;
+
 
     private Transform target;
     int WavePointIndex = 0;
@@ -20,12 +29,20 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_dir = (target.position - transform.position).normalized;
-        transform.position += m_dir * speed * Time.deltaTime;
-
-        if (Vector3.Distance(transform.position, target.position) <= 0.2f) 
+        if (m_State == E_SushiState.Running)
         {
-            GetNextWaypoint();
+            m_dir = (target.position - transform.position).normalized;
+            transform.position += m_dir * speed * Time.deltaTime;
+
+            if (Vector3.Distance(transform.position, target.position) <= 0.2f)
+            {
+                GetNextWaypoint();
+            }
+        }
+
+        else if (m_State == E_SushiState.Taken) 
+        {
+
         }
     }
     void GetNextWaypoint() 

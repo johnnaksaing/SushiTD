@@ -41,6 +41,8 @@ public class WaveSpawner : MonoBehaviour
 
     void SpawnEnemy() 
     {
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        EnemyScript NewSushi = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation).GetComponent<EnemyScript>();
+
+        NewSushi.m_State = EnemyScript.E_SushiState.Running;
     }
 }
