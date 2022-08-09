@@ -10,7 +10,7 @@ public class CustomerController : MonoBehaviour
         Eating,
         Default
     }
-    public E_CustomerState m_State;
+    public E_CustomerState m_State = E_CustomerState.Idle;
 
     public Transform target;
 

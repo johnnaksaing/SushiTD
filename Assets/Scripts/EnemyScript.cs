@@ -24,6 +24,7 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         target = Waypoints.WaypointTransforms[0];
+        m_State = E_SushiState.Running;
     }
 
     // Update is called once per frame

@@ -1307,6 +1307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 898950745}
   - component: {fileID: 898950746}
+  - component: {fileID: 898950747}
   m_Layer: 0
   m_Name: SushiSpawner
   m_TagString: Untagged
@@ -1335,7 +1336,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 898950744}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a54993d9e9886f240b2394e89701b385, type: 3}
   m_Name: 
@@ -1344,6 +1345,27 @@ MonoBehaviour:
   spawnPoint: {fileID: 898950745}
   timeBetweenWaves: 4
   waveCountdownText: {fileID: 897339236}
+--- !u!114 &898950747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898950744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94fd2a067cbc1ce499474ae75c244319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ComboSushies:
+  - {fileID: 7000004606562091874, guid: 7d930c3d4c68f9a4fb88d09eeda227ea, type: 3}
+  - {fileID: 7000004606562091874, guid: f0a806b382aa0f24ba0a1d780a8f6826, type: 3}
+  - {fileID: 7000004606562091874, guid: 8a5abb18ca4323640a0a3c078d669a9b, type: 3}
+  - {fileID: 7000004606562091874, guid: 437d8de3cce541e4abe9521eb39f3612, type: 3}
+  NormalInputs:
+  - {fileID: 7836021786748592655, guid: 54537aca9081594499df393211c16dc4, type: 3}
+  - {fileID: 2569757909188559850, guid: 21a17a2f4336b274a80daf31c4c2aa91, type: 3}
+  ComboValidTime: 0.5
 --- !u!4 &928544095 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6666271996146469304, guid: dd898ad9fe31441468c8cefd1d5ea37f, type: 3}

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ComboAttackManager : MonoBehaviour
 {
-    public GameObject[] ComboTextMeshes;
-    public GameObject[] OtherTextMeshes;
+    public GameObject[] ComboSushies;
+    public GameObject[] NormalInputs;
     //Queue<E_Skill> q;
     List<E_Skill> q;
     /// <summary>
@@ -58,7 +58,7 @@ public class ComboAttackManager : MonoBehaviour
 
         if (time > ComboValidTime)
         {
-            Debug.Log(q);
+            //Debug.Log(q);
             time = 0; 
         }
     }
@@ -94,7 +94,7 @@ public class ComboAttackManager : MonoBehaviour
         if (e == E_Skill.MAX) 
             return;
 
-        Instantiate(OtherTextMeshes[(int)e], transform.position + new Vector3(Random.Range(-5, 5), Random.Range(-5, 5)), Quaternion.identity);
+        Instantiate(NormalInputs[(int)e], transform.position + new Vector3(Random.Range(-5, 5), Random.Range(-5, 5)), Quaternion.identity);
     }
 
     List<E_Skill> current_commands;
@@ -136,7 +136,7 @@ public class ComboAttackManager : MonoBehaviour
 
         if (bHit)
         {
-            Instantiate(ComboTextMeshes[idx], transform.position + new Vector3(Random.Range(-5, 5), Random.Range(-5, 5)), Quaternion.identity);
+            Instantiate(ComboSushies[idx], transform.position + new Vector3(Random.Range(-5, 5), Random.Range(-5, 5)), Quaternion.identity);
             time = 0;
             current_commands.Clear();
         }
