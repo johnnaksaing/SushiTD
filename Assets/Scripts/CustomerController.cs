@@ -15,14 +15,10 @@ public class CustomerController : MonoBehaviour
     public Transform target;
 
     [Header("Attributes")]
-
     public float range = 5f;
-
     public float fireRate = 1f;
     private float fireCountDown = 0f;
-
     public float attackSpeed = 3f;
-
     public float StomachAmount = 5f;
 
     [SerializeField]
@@ -113,7 +109,8 @@ public class CustomerController : MonoBehaviour
     {
         yield return new WaitForSeconds(attackSpeed);
 
-        StomachAmount = StomachAmount - target.gameObject.GetComponent<EnemyScript>().HP;
+        EnemyScript sushi = target.gameObject.GetComponent<EnemyScript>();
+        StomachAmount = StomachAmount - sushi.HP;
         
         Destroy(target.gameObject);
         m_State = E_CustomerState.Idle;

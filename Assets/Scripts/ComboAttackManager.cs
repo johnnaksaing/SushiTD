@@ -28,9 +28,34 @@ public class ComboAttackManager : MonoBehaviour
     readonly int min_skill_count = 3;
 
     //end of Combo commands
+    public GameObjectPool<GameObject> normalPool_0;
+    public GameObjectPool<GameObject> normalPool_1;
+
+    void Awake()
+    {
+        normalPool_0 = new GameObjectPool<GameObject>(0, () =>
+        {
+            var obj = Instantiate(NormalInputs[0], transform);
+            DestoryBehavior b = obj.GetComponent<DestoryBehavior>();
+            b.shef = this;
+            b.m_Skill = E_Skill.punch;
+            obj.SetActive(true);
+            return obj;
+        });
+        normalPool_1 = new GameObjectPool<GameObject>(1, () =>
+        {
+            var obj = Instantiate(NormalInputs[1], transform);
+            DestoryBehavior b = obj.GetComponent<DestoryBehavior>();
+            b.shef = this;
+            b.m_Skill = E_Skill.kick;
+            obj.SetActive(true);
+            return obj;
+        });
+    }
 
     void Start()
     {
+        
         //q = new Queue<E_Skill>();
         q = new List<E_Skill>();
         current_commands = new List<E_Skill>();
@@ -96,7 +121,21 @@ public class ComboAttackManager : MonoBehaviour
         if (e == E_Skill.MAX) 
             return;
 
-        Instantiate(NormalInputs[(int)e], transform.position + new Vector3(Random.Range(-5, 5), Random.Range(-5, 5)), Quaternion.identity);
+        if (e == E_Skill.punch)
+        {
+            GameObject go = normalPool_0.Get();
+            go.GetComponent<DestoryBehavior>().Reuse();
+            go.gameObject.SetActive(true);
+            go.transform.position = transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
+        }
+        else if (e == E_Skill.kick) 
+        {
+            GameObject go = normalPool_1.Get();
+            go.GetComponent<DestoryBehavior>().Reuse();
+            go.gameObject.SetActive(true);
+            go.transform.position = transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
+        }
+        //Instantiate(NormalInputs[(int)e], transform.position + new Vector3(Random.Range(-5, 5), Random.Range(-5, 5)), Quaternion.identity);
     }
 
     List<E_Skill> current_commands;

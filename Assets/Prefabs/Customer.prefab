@@ -355,7 +355,7 @@ Transform:
   m_GameObject: {fileID: 2608152252898054454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -13.375776, y: 0.1600008, z: -25.303837}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 512064623356746997}
   m_Father: {fileID: 0}
@@ -373,14 +373,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c991a1ddeb9c7764f8b3f613a03c0e58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_State: 0
   target: {fileID: 0}
   range: 5
   fireRate: 1
+  attackSpeed: 3
+  StomachAmount: 5
+  m_Store: {fileID: 0}
   enemyTag: Enemy
   partToRotate: {fileID: 4952419383026640521}
   turnSpeed: 10
   pfb_bullet: {fileID: 2785937740843405939, guid: 5c9f61cdcc037ab49bfd6c6733b4b782, type: 3}
   firePoint: {fileID: 2066669669654677153}
+  EatingOffset: {x: 0, y: 0, z: 0}
   chestOffset: {x: 0, y: -90, z: -90}
 --- !u!1 &2668291924735230915
 GameObject:

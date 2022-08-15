@@ -25,14 +25,16 @@ public class GameObjectPool<T> where T : class
         }
     }
 
+    //Pool에서 Object를 하나 요청합니다. 용량보다 많이 요청한 경우 Pool은 새로 생성합니다.
     public T Get()
     {
-        if (m_objPool.Count > 0)
-            return m_objPool.Dequeue();
+        if (m_objPool.Count > 0) 
+            return m_objPool.Dequeue();        
         else
             return m_createFunc();
     }
 
+    //Pool에 Object를 반납합니다.
     public void Set(T obj)
     {
         m_objPool.Enqueue(obj);
