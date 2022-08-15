@@ -12,38 +12,22 @@ public class DestoryBehavior : MonoBehaviour
 
     public void Reuse()
     {
-        time = 0.5f;
-        bDead = false;
+        Invoke("Die", 0.5f);
     }
-    float time = 0.5f;
-    bool bDead = false;
     void Start()
     {
+        Reuse();
+    }
 
-        //Invoke("Die",0.5f);
-    }
-    private void Update()
-    {
-        if (bDead) return;
-        time -= Time.deltaTime;
-        Debug.Log(time);
-        if (time < 0)
-        {
-            bDead = true;
-            Die();
-        }
-    }
     void Die() 
     {
-        //m_Pool.Set(this);
-        //s
         switch (m_Skill) 
         {
             case ComboAttackManager.E_Skill.punch:
-                shef.normalPool_0.Set(this.gameObject);
+                shef.normalPool_0.Set(this);
                 break;
             case ComboAttackManager.E_Skill.kick:
-                shef.normalPool_1.Set(this.gameObject);
+                shef.normalPool_1.Set(this);
                 break;
             default:
                 break;

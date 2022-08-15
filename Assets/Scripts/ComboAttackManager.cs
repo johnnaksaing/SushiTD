@@ -28,28 +28,28 @@ public class ComboAttackManager : MonoBehaviour
     readonly int min_skill_count = 3;
 
     //end of Combo commands
-    public GameObjectPool<GameObject> normalPool_0;
-    public GameObjectPool<GameObject> normalPool_1;
+    public GameObjectPool<DestoryBehavior> normalPool_0;
+    public GameObjectPool<DestoryBehavior> normalPool_1;
 
     void Awake()
     {
-        normalPool_0 = new GameObjectPool<GameObject>(0, () =>
+        normalPool_0 = new GameObjectPool<DestoryBehavior>(0, () =>
         {
             var obj = Instantiate(NormalInputs[0], transform);
             DestoryBehavior b = obj.GetComponent<DestoryBehavior>();
             b.shef = this;
             b.m_Skill = E_Skill.punch;
             obj.SetActive(true);
-            return obj;
+            return b;
         });
-        normalPool_1 = new GameObjectPool<GameObject>(1, () =>
+        normalPool_1 = new GameObjectPool<DestoryBehavior>(0, () =>
         {
             var obj = Instantiate(NormalInputs[1], transform);
             DestoryBehavior b = obj.GetComponent<DestoryBehavior>();
             b.shef = this;
             b.m_Skill = E_Skill.kick;
             obj.SetActive(true);
-            return obj;
+            return b;
         });
     }
 
@@ -123,19 +123,18 @@ public class ComboAttackManager : MonoBehaviour
 
         if (e == E_Skill.punch)
         {
-            GameObject go = normalPool_0.Get();
-            go.GetComponent<DestoryBehavior>().Reuse();
+            DestoryBehavior go = normalPool_0.Get();
             go.gameObject.SetActive(true);
-            go.transform.position = transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
+            go.Reuse();
+            go.transform.position = transform.position + new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
         }
         else if (e == E_Skill.kick) 
         {
-            GameObject go = normalPool_1.Get();
-            go.GetComponent<DestoryBehavior>().Reuse();
+            DestoryBehavior go = normalPool_1.Get();
             go.gameObject.SetActive(true);
-            go.transform.position = transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
+            go.Reuse();
+            go.transform.position = transform.position + new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
         }
-        //Instantiate(NormalInputs[(int)e], transform.position + new Vector3(Random.Range(-5, 5), Random.Range(-5, 5)), Quaternion.identity);
     }
 
     List<E_Skill> current_commands;
