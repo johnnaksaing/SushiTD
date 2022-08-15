@@ -13,8 +13,10 @@ public class ComboAttackManager : MonoBehaviour
     /// </summary>
     public enum E_Skill 
     {
-        punch = 0,
-        kick = 1,
+        punch = 0, //A
+        kick = 1,//D
+        
+        
         MAX = 999999
     }
     E_Skill[] pkk = { E_Skill.punch, E_Skill.kick , E_Skill.kick};
